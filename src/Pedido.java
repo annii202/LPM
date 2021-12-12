@@ -1,4 +1,4 @@
-/** 
+/**
  * MIT License
  *
  * Copyright(c) 2021 João Caram <caram@pucminas.br>
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
- /** Classe pedido. Um pedido contém várias comidas (agregação) */
+/** Classe pedido. Um pedido contém várias comidas (agregação) */
 public class Pedido {
     /** Constante: máximo de comidas por pedido */
     private static final int MAXCOMIDAS;
@@ -52,10 +52,10 @@ public class Pedido {
         this.fechado = false;
     }
 
-    /** 
+    /**
      * Get para a quantidade de comidas 
      * @return Quantidade de comidas
-    */
+     */
     public int getQuantComidas(){
         return this.quantComidas;
     }
@@ -74,7 +74,7 @@ public class Pedido {
      * @return V/F para o sucesso da operação de adicionar
      */
     public boolean addComida(Comida c){
-        
+
         boolean resposta = false;
         if(!this.fechado){
             if(this.quantComidas<MAXCOMIDAS){
@@ -84,7 +84,7 @@ public class Pedido {
             }
         }
         return resposta;
-        
+
     }
 
     /**
@@ -98,7 +98,7 @@ public class Pedido {
         }
         return valor;
     }
-    
+
     /**
      * Método interno para gerar ou retornar o sumário. 
      * @return String com o sumário (detalhamento) do pedido
@@ -112,7 +112,7 @@ public class Pedido {
             }
 
             this.sumario = relat.toString();
-        }   
+        }
         return this.sumario;
     }
 

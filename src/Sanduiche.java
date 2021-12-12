@@ -1,4 +1,4 @@
-/** 
+/**
  * MIT License
  *
  * Copyright(c) 2021 João Caram <caram@pucminas.br>
@@ -22,9 +22,12 @@
  * SOFTWARE.
  */
 
- /** Classe Sanduíche, herda de Comida */
-public class Sanduiche extends Comida{
- 
+import java.util.Objects;
+import java.util.Scanner;
+
+/** Classe Sanduíche, herda de Comida */
+public class Sanduiche extends Comida implements IFlyWeight{
+
     /** Preço base do sanduíche */
     private static final double PRECO_SANDUICHE = 12.0;
     /** Máximo de adicionais de um sanduíche */
@@ -32,7 +35,10 @@ public class Sanduiche extends Comida{
 
     /** Regra própria: pode ter o dobro de carne */
     private boolean dobroDeCarne;
-    
+
+    private boolean sanduicheExtra = false;
+    private final double valorExtra = 1.5;
+
     /**
      * Construtor: indica se tem o dobro de carne
      */
@@ -40,18 +46,38 @@ public class Sanduiche extends Comida{
         super(PRECO_SANDUICHE, MAX_ADICIONAIS); //construtor da classe mãe
         this.setDescricao("Sanduíche ");
         this.dobroDeCarne = dobro;
+        String chave;
         if(this.dobroDeCarne)
             this.descricao += "com duas carnes ";
+
+        System.out.println("Deseja um sanduiche igual o seu por metade do preço? (y/n)");
+        Scanner teclado = new Scanner(System.in);
+        chave = teclado.nextLine();
+        if (Objects.equals(chave, "y") || Objects.equals(chave, "Y")){
+            this.sanduicheExtra = true;
+            operacao();
+        }
+        else if (Objects.equals(chave, "n") || Objects.equals(chave, "N"))
+            this.sanduicheExtra = false;
+        else
+            System.out.println("Comando não reconhecido. Tratando como falso.");
     }
 
     /**
      * Calcula o preço final, com a regra própria do dobro de carne
      */
     @Override
-    public double precoFinal() {        
+    public double precoFinal() {
         double precoFinal = precoBase+(this.qtAdicionais * VALOR_ADICIONAL);
-        if(this.dobroDeCarne)        
+        if(this.dobroDeCarne)
             precoFinal+=5.0;
+
+        if (this.sanduicheExtra)
+            precoFinal *= valorExtra;
         return precoFinal;
-	}
+    }
+
+    public void operacao(){
+        System.out.println("Adicionando sanduiche");
+    }
 }

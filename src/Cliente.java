@@ -1,4 +1,4 @@
-/** 
+/**
  * MIT License
  *
  * Copyright(c) 2021 João Caram <caram@pucminas.br>
@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
- /**
-  * Classe cliente do restaurante. Contém pedidos (composição)
-  * @author João Caram
-  */
+/**
+ * Classe cliente do restaurante. Contém pedidos (composição)
+ * @author João Caram
+ */
 public class Cliente {
-    
+
     /** Nome do cliente (livre) */
     public String nome;
     /** CPF do cliente (sem validação) */
@@ -39,12 +39,12 @@ public class Cliente {
     /** Categoria: injeção de dependência com interface. Composição em lugar de herança */
     private IFidelidade categoriaFidelidade;
 
-    
-/**
- * Construtor. Devolve um cliente com 0 pedidos e categoria de fidelidade
- * @param nome Nome do cliente (livre)
- * @param CPF CPF do cliente (sem validação)
- */
+
+    /**
+     * Construtor. Devolve um cliente com 0 pedidos e categoria de fidelidade
+     * @param nome Nome do cliente (livre)
+     * @param CPF CPF do cliente (sem validação)
+     */
     public Cliente(String nome, String CPF){
         this.nome = nome;
         this.CPF = CPF;
@@ -55,7 +55,7 @@ public class Cliente {
 
     /**
      * Adiciona um pedido
-     * @param p O pedido já pronto 
+     * @param p O pedido já pronto
      * @return V/F se foi possível adicionar
      */
     public boolean addPedido(Pedido p){
@@ -89,7 +89,7 @@ public class Cliente {
             teste = new Cliente10();
         }
         else{
-            teste = new Cliente25();    
+            teste = new Cliente25();
         }
 
         if(teste.desconto(this.pedidos) > 0 )

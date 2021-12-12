@@ -1,4 +1,4 @@
-/** 
+/**
  * MIT License
  *
  * Copyright(c) 2021 João Caram <caram@pucminas.br>
@@ -35,8 +35,8 @@ public class App {
      * "Limpa" a tela (códigos de terminal VT-100)
      */
     public static void limparTela(){
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();  
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     /**
@@ -73,27 +73,14 @@ public class App {
     //#region Métodos de controle
     /**
      * Cria uma comida de acordo com opções do menu (método "fábrica")
-     * @param teclado Scanner de leitura
      * @return Uma comida ou nulo
      */
     static Comida criarComida(Scanner teclado){
         System.out.print("Incluir no pedido(1-Pizza 2-Sanduíche): ");
-        int tipo = Integer.parseInt(teclado.nextLine());
-        Comida nova;
-        switch(tipo){
-            case 1: nova = new Pizza(false);
-                break;
-            case 2: nova = new Sanduiche(false);
-                break;
-            default: nova= null;
-                break;
-        }
-        if(nova!=null){
-            System.out.print("Quantos adicionais: ");
-            int quantos = Integer.parseInt(teclado.nextLine());
-            for(int i=0; i<quantos;i++) 
-                nova.addIngrediente("adicional "+(i+1)+" ");
-        }
+        Comida nova = null;
+        String escolha = teclado.nextLine();
+        nova = ComidaSimpleFactory.createFood(escolha);
+
         return nova;
     }
 
@@ -112,7 +99,7 @@ public class App {
         Pedido pedido=null;
         Cliente unicoCliente = new Cliente("Joao", "123456");
         int opcao = -1;
-       
+
         do{
             opcao = menu(teclado);
             limparTela();
@@ -121,47 +108,47 @@ public class App {
             // e modularização em métodos específicos na região de métodos de controle.
             switch(opcao){
                 case 1: if(pedido==null || pedido.fechado()){
-                            pedido = new Pedido();
-                            System.out.print("Novo pedido criado. ");
-                        }
-                        else
-                        System.out.print("Ainda há pedido aberto. ");
-                        pausa(teclado);
+                    pedido = new Pedido();
+                    System.out.print("Novo pedido criado. ");
+                }
+                else
+                    System.out.print("Ainda há pedido aberto. ");
+                    pausa(teclado);
                     break;
                 case 2: if(pedido!=null){
-                            Comida aux = criarComida(teclado);
-                            if(aux!=null) {
-                                if(pedido.addComida(aux))
-                                    System.out.println("Adicionado: "+aux);
-                                else
-                                    System.out.println("Não foi possível adicionar.");
-                            }
-                            else
-                                System.out.print("Inválido. Favor tentar novamente. ");
-                        }
+                    Comida aux = criarComida(teclado);
+                    if(aux!=null) {
+                        if(pedido.addComida(aux))
+                            System.out.println("Adicionado: "+aux);
                         else
-                            System.out.print("Pedido ainda não foi aberto. ");
-                        pausa(teclado);
+                            System.out.println("Não foi possível adicionar.");
+                    }
+                    else
+                        System.out.print("Inválido. Favor tentar novamente. ");
+                }
+                else
+                    System.out.print("Pedido ainda não foi aberto. ");
+                    pausa(teclado);
                     break;
                 case 3: if(pedido!=null){
-                            System.out.println(pedido);
-                        }
-                        else
-                            System.out.print("Pedido ainda não foi aberto. ");
-                        pausa(teclado);
+                    System.out.println(pedido);
+                }
+                else
+                    System.out.print("Pedido ainda não foi aberto. ");
+                    pausa(teclado);
                     break;
                 case 4: if(pedido!=null){
-                            pedido.fecharPedido();
-                            double aPagar = pedido.valorTotal()*(1.0 -unicoCliente.desconto());
-                            unicoCliente.addPedido(pedido);
-                            System.out.println(pedido);
-                            System.out.println("Cliente "+unicoCliente.nome+" paga R$ "+aPagar);
-                        }
-                        else
-                            System.out.print("Pedido ainda não foi aberto. ");
-                        pausa(teclado);
+                    pedido.fecharPedido();
+                    double aPagar = pedido.valorTotal()*(1.0 -unicoCliente.desconto());
+                    unicoCliente.addPedido(pedido);
+                    System.out.println(pedido);
+                    System.out.println("Cliente "+unicoCliente.nome+" paga R$ "+aPagar);
+                }
+                else
+                    System.out.print("Pedido ainda não foi aberto. ");
+                    pausa(teclado);
                     break;
-                case 5: 
+                case 5:
                     break;
             }
         }while(opcao!=0);

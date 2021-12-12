@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-/** 
+/**
  * MIT License
  *
  * Copyright(c) 2021 João Caram <caram@pucminas.br>
@@ -24,9 +24,9 @@ import java.time.LocalDate;
  * SOFTWARE.
  */
 
- /** Cliente com 25% de desconto.
-  *  Demonstração de composição vs herança
-  */
+/** Cliente com 25% de desconto.
+ *  Demonstração de composição vs herança
+ */
 public class Cliente25 implements IFidelidade {
     /** Data de referência. */
     LocalDate data = LocalDate.now();
@@ -54,8 +54,8 @@ public class Cliente25 implements IFidelidade {
 
         if(valorPedidos>=200.00 || totalPedidos>=50)
             desconto = 0.25;
-        
-        
+
+
         return desconto;
     }
 }

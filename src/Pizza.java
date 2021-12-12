@@ -1,4 +1,4 @@
-/** 
+/**
  * MIT License
  *
  * Copyright(c) 2021 João Caram <caram@pucminas.br>
@@ -22,9 +22,12 @@
  * SOFTWARE.
  */
 
- /** Classe Pizza, herda de Comida */
-public class Pizza extends Comida{
- 
+import java.util.Objects;
+import java.util.Scanner;
+
+/** Classe Pizza, herda de Comida */
+public class Pizza extends Comida implements IFlyWeight{
+
     /** Preço base da Pizza */
     private static final double PRECO_PIZZA = 30.0;
     /** Máximo de adicionais de uma Pizza*/
@@ -35,16 +38,33 @@ public class Pizza extends Comida{
     /** A pizza pode ter borda recheada */
     private boolean bordaRecheada;
 
+    private String extra;
+    private boolean molho = false;
+    private double addMolho;
+
     /**
      * Construtor. Indica pizza com borda recheada ou não
      * @param borda Booleano para borda recheada
      */
     public Pizza(boolean borda){
         super(PRECO_PIZZA,MAX_ADICIONAIS); //construtor da classe mãe
+        boolean ingExtra = false;
+        String chave;
         this.setDescricao("Pizza ");
         this.bordaRecheada = borda;
+        System.out.println("Deseja colocar ingrediente extra? (y/n)");
+        Scanner teclado = new Scanner(System.in);
+        chave = teclado.nextLine();
+        if (Objects.equals(chave, "y") || Objects.equals(chave, "Y")){
+            this.molho = true;
+            operacao();
+        }
+        else if (Objects.equals(chave, "n") || Objects.equals(chave, "N"))
+            this.molho = false;
+        else
+            System.out.println("Comando não reconhecido. Tratando como falso.");
     }
-    
+
 
     @Override
     /**
@@ -55,7 +75,38 @@ public class Pizza extends Comida{
         double precoFinal = precoBase+(this.qtAdicionais * VALOR_ADICIONAL * MULTIPLICADOR_ADICIONAIS);
         if(this.bordaRecheada)
             precoFinal +=7.50;
+
+        if (this.molho){
+            precoFinal += addMolho;
+        }
         return precoFinal;
-	}
+    }
+
+    public void operacao(){
+        System.out.println("Adicionando molho");
+        System.out.println("Selecione: 1 - para Barbecue --- 2 - para molho especial da casa --- 3 - para ambos");
+
+        Scanner teclado = new Scanner(System.in);
+        switch (teclado.nextInt()){
+            case 1:
+                System.out.println("Adicionando barbecue");
+                this.addMolho = 1.5;
+                break;
+
+            case 2:
+                System.out.println("Adicionando molho especial");
+                this.addMolho = 2;
+                break;
+
+            case 3:
+                System.out.println("Adicionando ambos");
+                this.addMolho = 3;
+                break;
+
+            default:
+                System.out.println("Náo reconhecido");
+        }
+
+    }
 
 }
