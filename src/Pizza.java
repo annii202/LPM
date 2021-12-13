@@ -87,24 +87,20 @@ public class Pizza extends Comida implements IFlyWeight{
         System.out.println("Selecione: 1 - para Barbecue --- 2 - para molho especial da casa --- 3 - para ambos");
 
         Scanner teclado = new Scanner(System.in);
-        switch (teclado.nextInt()){
-            case 1:
+        switch (teclado.nextInt()) {
+            case 1 -> {
                 System.out.println("Adicionando barbecue");
                 this.addMolho = 1.5;
-                break;
-
-            case 2:
+            }
+            case 2 -> {
                 System.out.println("Adicionando molho especial");
                 this.addMolho = 2;
-                break;
-
-            case 3:
+            }
+            case 3 -> {
                 System.out.println("Adicionando ambos");
                 this.addMolho = 3;
-                break;
-
-            default:
-                System.out.println("Náo reconhecido");
+            }
+            default -> System.out.println("Não reconhecido");
         }
 
     }

@@ -39,6 +39,8 @@ public class Sanduiche extends Comida implements IFlyWeight{
     private boolean sanduicheExtra = false;
     private final double valorExtra = 1.5;
 
+    private double adicionalSanduiche = 0;
+
     /**
      * Construtor: indica se tem o dobro de carne
      */
@@ -74,10 +76,31 @@ public class Sanduiche extends Comida implements IFlyWeight{
 
         if (this.sanduicheExtra)
             precoFinal *= valorExtra;
+
+        if (this.adicionalSanduiche != 0)
+            precoFinal += this.adicionalSanduiche;
         return precoFinal;
     }
 
     public void operacao(){
-        System.out.println("Adicionando sanduiche");
+        System.out.println("Adicionando ingrediente");
+        System.out.println("Selecione: 1 - para molho especial da casa --- 2 - para ovo --- 3 - para ambos (com desconto)");
+
+        Scanner teclado = new Scanner(System.in);
+        switch (teclado.nextInt()) {
+            case 1 -> {
+                System.out.println("Adicionando molho especial");
+                this.adicionalSanduiche = 1.5;
+            }
+            case 2 -> {
+                System.out.println("Adicionando ovo");
+                this.adicionalSanduiche = 2;
+            }
+            case 3 -> {
+                System.out.println("Adicionando ovo e molho especial");
+                this.adicionalSanduiche = 3;
+            }
+            default -> System.out.println("Não reconhecido");
+        }
     }
 }
