@@ -22,6 +22,10 @@
  * SOFTWARE.
  */
 
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+
 /** Classe pedido. Um pedido contém várias comidas (agregação) */
 public class Pedido {
     /** Constante: máximo de comidas por pedido */
@@ -36,7 +40,7 @@ public class Pedido {
     /** Sumário/descrição do pedido */
     private String sumario;
     /** Vetor com comidas (a ser melhorado) */
-    private Comida[] comidas;
+    private LinkedHashSet<Comida> comidas;
     /** Pedido aberto ou fechado  */
     private boolean fechado;
     /** Data do pedido */
@@ -48,8 +52,14 @@ public class Pedido {
 
     /** Construtor, cria pedido vazio */
     public Pedido(){
-        this.comidas = new Comida[MAXCOMIDAS];
+        this.comidas =  new LinkedHashSet<>();
         this.fechado = false;
+    }
+    public int getIdPedido(){return this.idPedido;}
+    public List<Comida> getComidas(){
+        List<Comida> todos = new LinkedList<>();
+        todos.addAll(this.comidas);
+        return todos;
     }
 
     /**
@@ -73,17 +83,15 @@ public class Pedido {
      * @param c A comida a ser adicionada
      * @return V/F para o sucesso da operação de adicionar
      */
-    public boolean addComida(Comida c){
-
-        boolean resposta = false;
-        if(!this.fechado){
-            if(this.quantComidas<MAXCOMIDAS){
-                comidas[quantComidas] = c;
-                this.quantComidas++;
-                resposta = true;
-            }
-        }
-        return resposta;
+    public void addComida(Comida c){
+        this.comidas.add(c);
+//        if(!this.fechado){
+//            if(this.quantComidas<MAXCOMIDAS){
+//                comidas[quantComidas] = c;
+//                this.quantComidas++;
+//                resposta = true;
+//            }
+//        }
 
     }
 
@@ -93,10 +101,9 @@ public class Pedido {
      */
     public double valorTotal(){
         double valor = 0.0;
-        for(int i=0; i<this.quantComidas; i++){
-            valor += comidas[i].precoFinal();
-        }
-        return valor;
+        return this.comidas.stream()
+                .mapToDouble(Comida::precoFinal)
+                .sum();
     }
 
     /**
@@ -106,10 +113,7 @@ public class Pedido {
     private String sumario(){
         if(!this.fechado){
             StringBuilder relat = new StringBuilder("PEDIDO Nº "+this.idPedido+"\n");
-
-            for(int i =0; i<quantComidas; i++){
-                relat.append(comidas[i].toString());
-            }
+                relat.append(comidas.stream().toString());
 
             this.sumario = relat.toString();
         }
