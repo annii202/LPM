@@ -27,7 +27,7 @@ import java.time.LocalDate;
 /** Cliente com 25% de desconto.
  *  Demonstração de composição vs herança
  */
-public class Cliente25 implements IFidelidade {
+public class Cliente25 extends Cliente implements IFidelidade {
     /** Data de referência. */
     LocalDate data = LocalDate.now();
     /** Data de referência. */
@@ -36,6 +36,9 @@ public class Cliente25 implements IFidelidade {
     /**
      * Desconto do cliente: concedido com R$200 nos últimos 31 dias ou 50 pedidos no ano
      */
+    public Cliente25(IDecorator cliente){
+        super(cliente);
+    }
     @Override
     public double desconto(Pedido[] pedidos) {
         double desconto = 0.0;

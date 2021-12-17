@@ -27,12 +27,14 @@ import java.time.LocalDate;
 /** Cliente com 10% de desconto.
  *  Demonstração de composição vs herança
  */
-public class Cliente10 implements IFidelidade {
+public class Cliente10 extends Cliente implements IFidelidade {
     /** Data de referência. */
     LocalDate data = LocalDate.now();
     /** Data de referência. */
     Data hoje = new Data(data.getDayOfMonth(),data.getMonthValue(), data.getYear());
-
+    public Cliente10(IDecorator cliente){
+        super(cliente);
+    }
 
     /**
      * Desconto do cliente: concedido com R$100 nos últimos 31 dias ou 25 pedidos no ano

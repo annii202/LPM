@@ -26,8 +26,9 @@
  * Classe cliente do restaurante. Contém pedidos (composição)
  * @author João Caram
  */
-public class Cliente {
+public abstract  class  Cliente implements IDecorator{
 
+    protected IDecorator cliente;
     /** Nome do cliente (livre) */
     public String nome;
     /** CPF do cliente (sem validação) */
@@ -52,6 +53,10 @@ public class Cliente {
         this.qtPedidos=0;
         this.categoriaFidelidade = null;
     }
+    public Cliente(IDecorator cliente){
+        this.cliente = cliente;
+
+    }
 
     /**
      * Adiciona um pedido
@@ -63,7 +68,6 @@ public class Cliente {
         if(this.qtPedidos < this.pedidos.length){
             this.pedidos[this.qtPedidos] = p;
             this.qtPedidos++;
-            this.mudarCategoria();
         }
         else
             resposta = false;
@@ -74,27 +78,27 @@ public class Cliente {
     /**
      * Retorna o desconto atual do cliente, em %. Calculado por sua categoria de fidelidade.
      */
-    public double desconto(){
-        if(this.categoriaFidelidade == null) return 0;
-        else return this.categoriaFidelidade.desconto(pedidos);
-    }
+//    public double desconto(){
+//        if(this.categoriaFidelidade == null) return 0;
+//        else return this.categoriaFidelidade.desconto(pedidos);
+//    }
 
     /**
      * Verifica mudança de categoria. Só verifica upgrades, não rebaixa o cliente.
      */
-    private void mudarCategoria(){
-        IFidelidade teste;  //vou testar se ele pode subir de categoria
-
-        if(this.categoriaFidelidade == null){
-            teste = new Cliente10();
-        }
-        else{
-            teste = new Cliente25();
-        }
-
-        if(teste.desconto(this.pedidos) > 0 )
-            this.categoriaFidelidade = teste;
-    }
+//    private void mudarCategoria(){
+//        IFidelidade teste;  //vou testar se ele pode subir de categoria
+//
+//        if(this.categoriaFidelidade == null){
+//            teste = new Cliente10();
+//        }
+//        else{
+//            teste = new Cliente25();
+//        }
+//
+//        if(teste.desconto(this.pedidos) > 0 )
+//            this.categoriaFidelidade = teste;
+//    }
 
     /**
      * Descrição do cliente: nome, CPF, total de pedidos
@@ -107,5 +111,9 @@ public class Cliente {
     }
 
 
-
+    @Override
+    public double desconto() {
+        if(this.categoriaFidelidade == null) return 0;
+        else return this.categoriaFidelidade.desconto(pedidos);
+    }
 }
